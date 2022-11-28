@@ -1,11 +1,14 @@
 import FormControl from "./components/FormControl";
 import ListItem from "./components/ListItem";
+import Pagination from "./components/Pagination";
 
 export default function Home() {
   return (
     <main className="h-screen flex flex-col items-center">
       <div className="w-min px-3 py-2 flex flex-col min-w-[400px]">
-        <h2 className="font-bold uppercase self-center mb-4">Pokemon Search</h2>
+        <h2 className="font-bold text-2xl uppercase self-center mb-4">
+          Pokemon Search
+        </h2>
         <FormControl label="Name" controlId="search">
           <input
             id="search"
@@ -24,24 +27,13 @@ export default function Home() {
             <option>Normal</option>
           </select>
         </FormControl>
-        <div>
-          <input type="checkbox" />
-          <label>is legendary</label>
-          <input type="checkbox" />
-          <label>is mythical</label>
+        <div className="grid grid-cols-2 mb-4">
+          <Checkbox id="legendary" label="is legendary" />
+          <Checkbox id="mythical" label="is mythical" />
         </div>
       </div>
 
-      <div>
-        Showing 1-3 results from 54
-        <button>first</button>
-        <button>prev</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>next</button>
-        <button>last</button>
-      </div>
+      <Pagination />
 
       <div className="flex-1 flex flex-col items-stretch gap-4">
         {Array(10)
@@ -53,3 +45,17 @@ export default function Home() {
     </main>
   );
 }
+
+type CheckboxProps = { id: string; label: string };
+const Checkbox = ({ id, label }: CheckboxProps) => (
+  <div className="flex items-center">
+    <input
+      id={id}
+      type="checkbox"
+      className="cursor-pointer bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
+    />
+    <label htmlFor={id} className="text-sm ml-3 cursor-pointer">
+      {label}
+    </label>
+  </div>
+);

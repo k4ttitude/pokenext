@@ -1,0 +1,13 @@
+.button {
+  @apply relative px-2;
+  &::after {
+    content: "";
+    @apply absolute right-0 top-1 bottom-1 border-r border-r-gray-900;
+  }
+
+  &:last-child {
+    &::after {
+      @apply hidden;
+    }
+  }
+}
