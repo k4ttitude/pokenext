@@ -3,12 +3,12 @@ import { gql, TypedDocumentNode } from "@apollo/client";
 /** List pokemon */
 export type Pokemon = {
   id: number;
-  name: string;
   order: number;
   is_legendary: boolean;
   is_mythical: boolean;
   pokemon_v2_pokemonspeciesnames: {
     genus: string;
+    name: string;
   }[];
 };
 
@@ -30,7 +30,6 @@ export const POKEMONS_LIST: TypedDocumentNode<
       order_by: { order: asc }
     ) {
       id
-      name
       order
       is_legendary
       is_mythical
@@ -38,6 +37,7 @@ export const POKEMONS_LIST: TypedDocumentNode<
         where: { pokemon_v2_language: { name: { _eq: "en" } } }
       ) {
         genus
+        name
       }
     }
   }

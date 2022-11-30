@@ -22,7 +22,8 @@ export default function ListItem({ pokemon }: Props) {
       />
       <div className="w-full bg-yellow-500 rounded mx-6 px-3 py-2 h-min flex flex-col">
         <h3 className="uppercase font-bold">
-          #{formatOrder(pokemon.order, total.toString().length)} {pokemon.name}
+          #{formatOrder(pokemon.order, total.toString().length)}{" "}
+          {pokemon.pokemon_v2_pokemonspeciesnames[0].name}
         </h3>
         <span>{pokemon.pokemon_v2_pokemonspeciesnames[0].genus}</span>
       </div>
