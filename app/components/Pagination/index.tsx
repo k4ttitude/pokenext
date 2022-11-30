@@ -36,10 +36,10 @@ export default function Pagination({}: Props) {
           className={styles.PaginationButton}
           onClick={handleGoFirst}
         >
-          first
+          &lt;&lt;
         </PaginationButton>
         <PaginationButton onClick={handleGoPrev} disabled={page === 1}>
-          prev
+          &lt;
         </PaginationButton>
         {adjectionPages[0] > 1 && (
           <PaginationButton disabled>...</PaginationButton>
@@ -57,9 +57,9 @@ export default function Pagination({}: Props) {
           <PaginationButton disabled>...</PaginationButton>
         )}
         <PaginationButton onClick={handleGoNext} disabled={page === pageCount}>
-          next
+          &gt;
         </PaginationButton>
-        <PaginationButton onClick={handleGoLast}>last</PaginationButton>
+        <PaginationButton onClick={handleGoLast}>&gt;&gt;</PaginationButton>
       </div>
     </div>
   );
