@@ -86,12 +86,16 @@ export default async function Page({ params }: Props) {
               ))}
           </Content>
         </Section>
-        <Section>
-          <Title>Height</Title>
-        </Section>
-        <Section>
-          <Title>Weight</Title>
-        </Section>
+        <div className="grid grid-cols-2 gap-1">
+          <Section>
+            <Title>Height</Title>
+            <Content>{pokemon.height / 10} m</Content>
+          </Section>
+          <Section>
+            <Title>Weight</Title>
+            <Content>{pokemon.weight / 10} kg</Content>
+          </Section>
+        </div>
       </div>
     </div>
   );
@@ -104,14 +108,16 @@ const Section = ({ children }: PropsWithChildren) => (
 );
 
 const Title = ({ children }: PropsWithChildren) => (
-  <h3 className="font-bold">{children}</h3>
+  <h3 className="font-bold text-center">{children}</h3>
 );
 
 const Content = ({
   children,
   className,
 }: PropsWithChildren<{ className?: string }>) => (
-  <div className={classNames("bg-white rounded px-2 py-1", className)}>
+  <div
+    className={classNames("bg-white rounded px-2 py-1 text-center", className)}
+  >
     {children}
   </div>
 );
