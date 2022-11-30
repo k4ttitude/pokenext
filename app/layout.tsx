@@ -1,3 +1,4 @@
+import GraphqlProvider from "../graphql/GraphqlProvider";
 import "./globals.css";
 
 export default function RootLayout({
@@ -12,7 +13,9 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body className="bg-white text-gray-900">{children}</body>
+      <body className="bg-white text-gray-900">
+        <GraphqlProvider>{children}</GraphqlProvider>
+      </body>
     </html>
   );
 }

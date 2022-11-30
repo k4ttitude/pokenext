@@ -1,33 +1,19 @@
-import { gql, useQuery } from "@apollo/client";
 import { client } from "../graphql/client";
 import { PokemonListQueryResponse } from "../graphql/models";
+import { pokemonListQuery } from "../graphql/queries";
 import FormControl from "./components/FormControl";
-import ListItem from "./components/ListItem";
 import Pagination from "./components/Pagination";
-
-const query = gql`
-  query PokemonList {
-    pokemon_v2_pokemonspecies(limit: 5, offset: 0) {
-      id
-      name
-      is_legendary
-      is_mythical
-      pokemon_v2_pokemonspeciesnames(
-        where: { pokemon_v2_language: { name: { _eq: "en" } } }
-      ) {
-        genus
-      }
-    }
-  }
-`;
+import SearchResult from "./components/SearchResult";
 
 const getData = async () => {
-  const res = await client.query<PokemonListQueryResponse>({ query });
+  const res = await client.query<PokemonListQueryResponse>({
+    query: pokemonListQuery,
+  });
   return res;
 };
 
 export default async function Home() {
-  const { data, loading } = await getData();
+  // const { data, loading } = await getData();
 
   return (
     <main className="h-screen flex flex-col items-center">
@@ -61,11 +47,7 @@ export default async function Home() {
 
       <Pagination />
 
-      <div className="flex-1 flex flex-col items-stretch gap-4">
-        {data.pokemon_v2_pokemonspecies.map((pokemon) => (
-          <ListItem key={pokemon.id} pokemon={pokemon} />
-        ))}
-      </div>
+      <SearchResult />
     </main>
   );
 }
