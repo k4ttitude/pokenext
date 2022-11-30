@@ -28,8 +28,8 @@ export default async function Page({ params }: Props) {
         <div className="flex gap-1">
           <Content className="flex-1 flex justify-evenly">
             <div className="flex-[2] flex flex-col items-center">
-              <span>{englishName?.name}</span>
-              <span>
+              <span className="font-bold text-lg">{englishName?.name}</span>
+              <span className="font-bold">
                 {
                   pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames.find(
                     (item) => item.pokemon_v2_language.name === "ja"
@@ -37,7 +37,7 @@ export default async function Page({ params }: Props) {
                 }
               </span>
             </div>
-            <div className="flex-1 flex items-center justify-center">
+            <div className="flex-1 flex items-center justify-center text-center text-sm">
               {englishName?.genus}
             </div>
           </Content>
@@ -56,7 +56,19 @@ export default async function Page({ params }: Props) {
         </Content>
       </div>
       <Section>
-        <Title>Type</Title>
+        <Title>Types</Title>
+        <Content>
+          {pokemon.pokemon_v2_pokemontypes
+            .map((item) => item.pokemon_v2_type.name)
+            .map((type, idx) => (
+              <span
+                key={`type_${idx}`}
+                className={`rounded px-2 py-1 capitalize leading-none bg-pokemon-${type}`}
+              >
+                {type}
+              </span>
+            ))}
+        </Content>
       </Section>
       <Section>
         <Title>Abilities</Title>
