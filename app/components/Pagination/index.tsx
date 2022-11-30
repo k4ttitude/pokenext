@@ -4,20 +4,33 @@ import { forwardRef } from "react";
 import styles from "./Pagination.module.scss";
 import classNames from "classnames";
 import { usePaginationStore } from "../../../stores/pagination.store";
+import { useQuery } from "@apollo/client";
+import { POKEMONS_COUNT } from "../../../graphql/queries";
 
 type Props = {};
 
 export default function Pagination({}: Props) {
-  const { page, setPage } = usePaginationStore();
+  const { page, pageCount, limit, total, setPage, setTotal } =
+    usePaginationStore();
+  useQuery(POKEMONS_COUNT, {
+    onCompleted: (data) =>
+      setTotal(data.pokemon_v2_pokemon_aggregate.aggregate.count),
+  });
 
   const handleGoFirst = () => setPage(1);
   const handleGoPrev = () => page > 1 && setPage(page - 1);
-  const handleGoNext = () => page < 10 && setPage(page + 1);
-  const handleGoLast = () => setPage(10);
+  const handleGoNext = () => page < pageCount && setPage(page + 1);
+  const handleGoLast = () => setPage(pageCount);
+
+  const adjectionPages = [page - 2, page - 1, page, page + 1, page + 2].filter(
+    (p) => p > 0 && p <= pageCount
+  );
 
   return (
     <div className="mb-4 flex gap-2 items-center">
-      <span className="text-sm">Showing 1-3 results from 54</span>
+      <span className="text-sm">
+        Showing {(page - 1) * limit + 1}-{page * limit} results from {total}
+      </span>
       <div className="border border-gray-900">
         <PaginationButton
           className={styles.PaginationButton}
@@ -26,9 +39,21 @@ export default function Pagination({}: Props) {
           first
         </PaginationButton>
         <PaginationButton onClick={handleGoPrev}>prev</PaginationButton>
-        <PaginationButton>1</PaginationButton>
-        <PaginationButton>2</PaginationButton>
-        <PaginationButton>3</PaginationButton>
+        {adjectionPages[0] > 1 && (
+          <PaginationButton disabled>...</PaginationButton>
+        )}
+        {adjectionPages.map((i) => (
+          <PaginationButton
+            key={`page-${i}`}
+            onClick={() => setPage(i)}
+            active={i === page}
+          >
+            {i}
+          </PaginationButton>
+        ))}
+        {adjectionPages[adjectionPages.length - 1] < pageCount && (
+          <PaginationButton disabled>...</PaginationButton>
+        )}
         <PaginationButton onClick={handleGoNext}>next</PaginationButton>
         <PaginationButton onClick={handleGoLast}>last</PaginationButton>
       </div>
@@ -38,11 +63,15 @@ export default function Pagination({}: Props) {
 
 const PaginationButton = forwardRef<
   HTMLButtonElement,
-  React.ComponentProps<"button">
->(function PaginationButton({ className, children, ...props }, ref) {
+  React.ComponentProps<"button"> & { active?: boolean }
+>(function PaginationButton({ className, active, children, ...props }, ref) {
   return (
     <button
-      className={classNames(styles.button, className)}
+      className={classNames({
+        [styles.button]: true,
+        className: true,
+        "font-bold": active,
+      })}
       {...props}
       ref={ref}
     >
