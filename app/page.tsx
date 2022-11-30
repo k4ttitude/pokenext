@@ -1,12 +1,12 @@
 import { client } from "../graphql/client";
-import { PokemonListQueryResponse } from "../graphql/models";
+import { PokemonList } from "../graphql/models";
 import { pokemonListQuery } from "../graphql/queries";
 import FormControl from "./components/FormControl";
 import Pagination from "./components/Pagination";
 import SearchResult from "./components/SearchResult";
 
 const getData = async () => {
-  const res = await client.query<PokemonListQueryResponse>({
+  const res = await client.query<PokemonList["Response"]>({
     query: pokemonListQuery,
   });
   return res;

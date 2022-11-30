@@ -3,8 +3,8 @@
 import { gql } from "@apollo/client";
 
 export const pokemonListQuery = gql`
-  query PokemonList {
-    pokemon_v2_pokemonspecies(limit: 5, offset: 0) {
+  query PokemonList($limit: Int, $offset: Int) {
+    pokemon_v2_pokemonspecies(limit: $limit, offset: $offset) {
       id
       name
       is_legendary

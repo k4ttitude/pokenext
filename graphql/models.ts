@@ -8,6 +8,9 @@ export type Pokemon = {
   }[];
 };
 
-export type PokemonListQueryResponse = {
-  pokemon_v2_pokemonspecies: Pokemon[];
+export type PokemonList = {
+  Variables: { limit?: number; offset?: number };
+  Response: {
+    pokemon_v2_pokemonspecies: Pokemon[];
+  };
 };
