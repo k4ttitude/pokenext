@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Pokemon } from "../../../graphql/queries";
-import { usePaginationStore } from "../../../stores/pagination.store";
+import { useSearchStore } from "../../../stores/search.store";
 
 const formatOrder = (order: number, size: number) => {
   const s = `000${order}`;
@@ -9,7 +9,7 @@ const formatOrder = (order: number, size: number) => {
 
 type Props = { pokemon: Pokemon };
 export default function ListItem({ pokemon }: Props) {
-  const { total } = usePaginationStore();
+  const { total } = useSearchStore();
   const speciesname =
     pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames[0];
   const type = pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name;

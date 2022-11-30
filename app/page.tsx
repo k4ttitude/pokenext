@@ -1,19 +1,34 @@
-import { client } from "../graphql/client";
-import { PokemonsList } from "../graphql/queries";
-import { POKEMONS_LIST } from "../graphql/queries";
+"use client";
+
+import { useSearchStore } from "../stores/search.store";
 import FormControl from "./components/FormControl";
 import Pagination from "./components/Pagination";
 import SearchResult from "./components/SearchResult";
 
-const getData = async () => {
-  const res = await client.query({
-    query: POKEMONS_LIST,
-  });
-  return res;
-};
+const TYPES = [
+  "normal",
+  "fire",
+  "water",
+  "grass",
+  "electric",
+  "ice",
+  "fighting",
+  "poison",
+  "ground",
+  "flying",
+  "psychic",
+  "bug",
+  "rock",
+  "ghost",
+  "dark",
+  "dragon",
+  "steel",
+  "fairy",
+];
 
-export default async function Home() {
-  // const { data, loading } = await getData();
+export default function Home() {
+  const { search, type, isLegendary, isMythical } = useSearchStore();
+  console.log(search.value, type.value, isLegendary.value, isMythical.value);
 
   return (
     <main className="h-screen flex flex-col items-center">
@@ -26,17 +41,23 @@ export default async function Home() {
             id="search"
             type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
-            required
+            value={search.value}
+            onChange={(e) => search.onChange(e.target.value)}
           />
         </FormControl>
 
         <FormControl label="Type" controlId="type">
           <select
             id="type"
-            className="pr-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="pr-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 capitalize"
+            value={type.value}
+            onChange={(e) => type.onChange(e.target.value)}
           >
-            <option>Electric</option>
-            <option>Normal</option>
+            {TYPES.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
         </FormControl>
         <div className="grid grid-cols-2 mb-4">

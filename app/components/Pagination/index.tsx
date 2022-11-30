@@ -3,15 +3,14 @@
 import { forwardRef, useMemo } from "react";
 import styles from "./Pagination.module.scss";
 import classNames from "classnames";
-import { usePaginationStore } from "../../../stores/pagination.store";
+import { useSearchStore } from "../../../stores/search.store";
 import { useQuery } from "@apollo/client";
 import { POKEMONS_COUNT } from "../../../graphql/queries";
 
 type Props = {};
 
 export default function Pagination({}: Props) {
-  const { page, pageCount, limit, total, setPage, setTotal } =
-    usePaginationStore();
+  const { page, pageCount, limit, total, setPage, setTotal } = useSearchStore();
   useQuery(POKEMONS_COUNT, {
     onCompleted: (data) =>
       setTotal(data.pokemon_v2_pokemonspecies_aggregate.aggregate.count),
