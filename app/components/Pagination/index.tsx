@@ -4,8 +4,6 @@ import { forwardRef, useMemo } from "react";
 import styles from "./Pagination.module.scss";
 import classNames from "classnames";
 import { useSearchStore } from "../../../stores/search.store";
-import { useQuery } from "@apollo/client";
-import { POKEMONS_COUNT } from "../../../graphql/queries";
 
 type Props = {};
 

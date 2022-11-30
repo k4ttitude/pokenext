@@ -48,6 +48,6 @@ export const useSearchStore = create<Pagination>((set, get) => ({
   isMythical: {
     value: false,
     onChange: (value) =>
-      set({ offset: 0, page: 1, isLegendary: { ...get().isMythical, value } }),
+      set({ offset: 0, page: 1, isMythical: { ...get().isMythical, value } }),
   },
 }));

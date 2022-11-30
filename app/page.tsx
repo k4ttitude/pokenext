@@ -28,7 +28,6 @@ const TYPES = [
 
 export default function Home() {
   const { search, type, isLegendary, isMythical } = useSearchStore();
-  console.log(search.value, type.value, isLegendary.value, isMythical.value);
 
   return (
     <main className="h-screen flex flex-col items-center">
@@ -61,8 +60,8 @@ export default function Home() {
           </select>
         </FormControl>
         <div className="grid grid-cols-2 mb-4">
-          <Checkbox id="legendary" label="is legendary" />
-          <Checkbox id="mythical" label="is mythical" />
+          <Checkbox id="legendary" label="is legendary" {...isLegendary} />
+          <Checkbox id="mythical" label="is mythical" {...isMythical} />
         </div>
       </div>
 
@@ -73,13 +72,20 @@ export default function Home() {
   );
 }
 
-type CheckboxProps = { id: string; label: string };
-const Checkbox = ({ id, label }: CheckboxProps) => (
+type CheckboxProps = {
+  id: string;
+  label: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
+};
+const Checkbox = ({ id, label, value, onChange }: CheckboxProps) => (
   <div className="flex items-center">
     <input
       id={id}
       type="checkbox"
       className="cursor-pointer bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
+      checked={value}
+      onChange={(e) => onChange(e.target.checked)}
     />
     <label htmlFor={id} className="text-sm ml-3 cursor-pointer">
       {label}
