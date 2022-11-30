@@ -30,7 +30,7 @@ export default function Home() {
   const { search, type, isLegendary, isMythical } = useSearchStore();
 
   return (
-    <div className="flex flex-col">
+    <main className="mx-auto h-screen flex flex-col max-w-[970px] w-full px-3 py-2">
       <h2 className="font-bold text-2xl uppercase mb-4 self-center">
         Pokemon Search
       </h2>
@@ -66,7 +66,7 @@ export default function Home() {
       <Pagination />
       <SearchResult />
       <Pagination />
-    </div>
+    </main>
   );
 }
 

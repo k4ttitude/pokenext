@@ -18,9 +18,12 @@ export default async function Page({ params }: Props) {
     pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames.find(
       (item) => item.pokemon_v2_language.name === "en"
     );
+  const type = pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name;
 
   return (
-    <div className="flex flex-col bg-yellow-300 items-center">
+    <main
+      className={`flex flex-col items-center min-h-screen bg-pokemon-${type}`}
+    >
       <h2 className="font-bold text-2xl uppercase mb-4">
         Pokemon search results
       </h2>
@@ -97,7 +100,7 @@ export default async function Page({ params }: Props) {
           </Section>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
