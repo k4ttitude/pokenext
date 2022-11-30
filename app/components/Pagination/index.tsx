@@ -32,7 +32,7 @@ export default function Pagination({}: Props) {
       : (page - 1) * limit + Math.min(page * limit, total % limit);
 
   return (
-    <div className="mb-4 flex gap-2 items-center">
+    <div className="flex gap-2 items-center ml-auto w-fit">
       <span className="text-sm">
         Showing {first}-{last} results from {total}
       </span>

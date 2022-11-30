@@ -14,7 +14,11 @@ export default function RootLayout({
       */}
       <head />
       <body className="bg-white text-gray-900">
-        <GraphqlProvider>{children}</GraphqlProvider>
+        <div className="mx-auto h-screen flex flex-col items-center max-w-[970px]">
+          <main className="px-3 py-2 flex flex-col w-full">
+            <GraphqlProvider>{children}</GraphqlProvider>
+          </main>
+        </div>
       </body>
     </html>
   );
