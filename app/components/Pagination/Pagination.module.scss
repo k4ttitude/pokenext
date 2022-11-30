@@ -1,5 +1,8 @@
 .button {
   @apply relative px-2;
+  &:disabled {
+    @apply text-gray-500
+  }
   &::after {
     content: "";
     @apply absolute right-0 top-1 bottom-1 border-r border-r-gray-900;

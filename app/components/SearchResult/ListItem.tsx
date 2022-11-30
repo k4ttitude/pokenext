@@ -12,7 +12,7 @@ export default function ListItem({ pokemon }: Props) {
   const { total } = usePaginationStore();
 
   return (
-    <div className="bg-yellow-300 rounded px-3 py-2 flex items-center gap-3">
+    <div className="bg-yellow-300 hover:shadow-lg hover:ring hover:ring-yellow-500 rounded px-3 py-2 flex items-center gap-3 cursor-pointer">
       <Image
         alt="avatar"
         src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png"
