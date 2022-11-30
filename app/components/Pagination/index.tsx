@@ -14,7 +14,7 @@ export default function Pagination({}: Props) {
     usePaginationStore();
   useQuery(POKEMONS_COUNT, {
     onCompleted: (data) =>
-      setTotal(data.pokemon_v2_pokemon_aggregate.aggregate.count),
+      setTotal(data.pokemon_v2_pokemonspecies_aggregate.aggregate.count),
   });
 
   const handleGoFirst = () => setPage(1);
@@ -22,7 +22,7 @@ export default function Pagination({}: Props) {
   const handleGoNext = () => page < pageCount && setPage(page + 1);
   const handleGoLast = () => setPage(pageCount);
 
-  const adjectionPages = [page - 2, page - 1, page, page + 1, page + 2].filter(
+  const adjectionPages = [page - 1, page, page + 1].filter(
     (p) => p > 0 && p <= pageCount
   );
 

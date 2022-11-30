@@ -2,11 +2,13 @@
 
 import { useQuery } from "@apollo/client";
 import { POKEMONS_LIST } from "../../../graphql/queries";
-import ListItem from "../ListItem";
+import { usePaginationStore } from "../../../stores/pagination.store";
+import ListItem from "./ListItem";
 
 export default function SearchResult() {
+  const { offset, limit } = usePaginationStore();
   const { data } = useQuery(POKEMONS_LIST, {
-    variables: { limit: 5, offset: 0 },
+    variables: { limit, offset },
   });
 
   return (

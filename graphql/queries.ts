@@ -4,6 +4,7 @@ import { gql, TypedDocumentNode } from "@apollo/client";
 export type Pokemon = {
   id: number;
   name: string;
+  order: number;
   is_legendary: boolean;
   is_mythical: boolean;
   pokemon_v2_pokemonspeciesnames: {
@@ -23,9 +24,14 @@ export const POKEMONS_LIST: TypedDocumentNode<
   PokemonsList["Variables"]
 > = gql`
   query ListPokemon($limit: Int, $offset: Int) {
-    pokemon_v2_pokemonspecies(limit: $limit, offset: $offset) {
+    pokemon_v2_pokemonspecies(
+      limit: $limit
+      offset: $offset
+      order_by: { order: asc }
+    ) {
       id
       name
+      order
       is_legendary
       is_mythical
       pokemon_v2_pokemonspeciesnames(
@@ -39,7 +45,7 @@ export const POKEMONS_LIST: TypedDocumentNode<
 
 /** Count pokemon */
 export type PokemonsCount = {
-  pokemon_v2_pokemon_aggregate: {
+  pokemon_v2_pokemonspecies_aggregate: {
     aggregate: {
       count: number;
     };
@@ -48,7 +54,7 @@ export type PokemonsCount = {
 
 export const POKEMONS_COUNT: TypedDocumentNode<PokemonsCount> = gql`
   query CountPokemon {
-    pokemon_v2_pokemon_aggregate {
+    pokemon_v2_pokemonspecies_aggregate {
       aggregate {
         count
       }
