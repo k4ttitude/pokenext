@@ -1,0 +1,1 @@
+cd public && git clone https://github.com/PokeAPI/sprites.git

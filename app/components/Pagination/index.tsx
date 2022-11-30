@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useMemo } from "react";
 import styles from "./Pagination.module.scss";
 import classNames from "classnames";
 import { usePaginationStore } from "../../../stores/pagination.store";
@@ -22,9 +22,15 @@ export default function Pagination({}: Props) {
   const handleGoNext = () => page < pageCount && setPage(page + 1);
   const handleGoLast = () => setPage(pageCount);
 
-  const adjectionPages = [page - 2, page - 1, page, page + 1, page + 2].filter(
-    (p) => p > 0 && p <= pageCount
-  );
+  const adjectionPages = useMemo(() => {
+    const before = [4, 3, 2, 1].map((i) => page - i).filter((p) => p > 0);
+    const after = [1, 2, 3, 4]
+      .map((i) => page + i)
+      .filter((p) => p <= pageCount);
+    const pages = [...before, page, ...after];
+    const from = Math.floor(pages.length / 2) - 2;
+    return pages.slice(from, from + 5);
+  }, [page, pageCount]);
 
   return (
     <div className="mb-4 flex gap-2 items-center">
