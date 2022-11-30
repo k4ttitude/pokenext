@@ -22,7 +22,7 @@ export default function Pagination({}: Props) {
   const handleGoNext = () => page < pageCount && setPage(page + 1);
   const handleGoLast = () => setPage(pageCount);
 
-  const adjectionPages = [page - 1, page, page + 1].filter(
+  const adjectionPages = [page - 2, page - 1, page, page + 1, page + 2].filter(
     (p) => p > 0 && p <= pageCount
   );
 
