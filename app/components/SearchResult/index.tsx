@@ -13,7 +13,7 @@ export default function SearchResult() {
 
   return (
     <div className="flex-1 flex flex-col items-stretch gap-4">
-      {data?.pokemon_v2_pokemonspecies.map((pokemon) => (
+      {data?.pokemon_v2_pokemon.map((pokemon) => (
         <ListItem key={pokemon.id} pokemon={pokemon} />
       ))}
     </div>

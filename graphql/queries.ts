@@ -4,18 +4,23 @@ import { gql, TypedDocumentNode } from "@apollo/client";
 export type Pokemon = {
   id: number;
   order: number;
-  is_legendary: boolean;
-  is_mythical: boolean;
-  pokemon_v2_pokemonspeciesnames: {
-    genus: string;
-    name: string;
+  pokemon_v2_pokemonspecy: {
+    pokemon_v2_pokemonspeciesnames: {
+      genus: string;
+      name: string;
+    }[];
+  };
+  pokemon_v2_pokemontypes: {
+    pokemon_v2_type: {
+      name: string;
+    };
   }[];
 };
 
 export type PokemonsList = {
   Variables: { limit?: number; offset?: number };
   Response: {
-    pokemon_v2_pokemonspecies: Pokemon[];
+    pokemon_v2_pokemon: Pokemon[];
   };
 };
 
@@ -24,20 +29,21 @@ export const POKEMONS_LIST: TypedDocumentNode<
   PokemonsList["Variables"]
 > = gql`
   query ListPokemon($limit: Int, $offset: Int) {
-    pokemon_v2_pokemonspecies(
-      limit: $limit
-      offset: $offset
-      order_by: { order: asc }
-    ) {
+    pokemon_v2_pokemon(limit: $limit, offset: $offset) {
       id
       order
-      is_legendary
-      is_mythical
-      pokemon_v2_pokemonspeciesnames(
-        where: { pokemon_v2_language: { name: { _eq: "en" } } }
-      ) {
-        genus
-        name
+      pokemon_v2_pokemonspecy {
+        pokemon_v2_pokemonspeciesnames(
+          where: { pokemon_v2_language: { name: { _eq: "en" } } }
+        ) {
+          genus
+          name
+        }
+      }
+      pokemon_v2_pokemontypes {
+        pokemon_v2_type {
+          name
+        }
       }
     }
   }
