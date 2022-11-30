@@ -113,6 +113,8 @@ type PokemonDetails = {
         };
       }[];
       pokemon_v2_pokemonspecy: {
+        is_mythical: boolean;
+        is_legendary: boolean;
         pokemon_v2_pokemonspeciesnames: {
           name: string;
           genus: string;
@@ -147,6 +149,8 @@ export const POKEMON_DETAILS: TypedDocumentNode<
         }
       }
       pokemon_v2_pokemonspecy {
+        is_legendary
+        is_mythical
         pokemon_v2_pokemonspeciesnames(
           where: { pokemon_v2_language: { name: { _in: ["en", "ja"] } } }
         ) {
