@@ -6,7 +6,11 @@ import { POKEMON_DETAILS } from "../../../graphql/queries";
 import { formatId } from "../../components/SearchResult/ListItem";
 
 const getPokemon = async (id: number) => {
-  const res = await client.query({ query: POKEMON_DETAILS, variables: { id } });
+  const res = await client.query({
+    query: POKEMON_DETAILS,
+    variables: { id },
+    fetchPolicy: "cache-first",
+  });
   return res.data.pokemon_v2_pokemon_by_pk;
 };
 
@@ -62,7 +66,7 @@ export default async function Page({ params }: Props) {
             </div>
             <Content>
               <Image
-                src="/sprites/sprites/pokemon/1.png"
+                src={`/sprites/sprites/pokemon/${pokemon.id}.png`}
                 alt="Pikachu"
                 className="w-full"
                 width={200}
