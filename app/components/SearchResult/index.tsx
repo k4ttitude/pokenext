@@ -1,15 +1,13 @@
 "use client";
 
 import { useQuery } from "@apollo/client";
-import { PokemonList } from "../../../graphql/models";
-import { pokemonListQuery } from "../../../graphql/queries";
+import { POKEMONS_LIST } from "../../../graphql/queries";
 import ListItem from "../ListItem";
 
 export default function SearchResult() {
-  const { data } = useQuery<PokemonList["Response"], PokemonList["Variables"]>(
-    pokemonListQuery,
-    { variables: { limit: 1, offset: 0 } }
-  );
+  const { data } = useQuery(POKEMONS_LIST, {
+    variables: { limit: 5, offset: 0 },
+  });
 
   return (
     <div className="flex-1 flex flex-col items-stretch gap-4">
