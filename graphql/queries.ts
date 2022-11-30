@@ -5,6 +5,8 @@ export type Pokemon = {
   id: number;
   order: number;
   pokemon_v2_pokemonspecy: {
+    is_mythical: boolean;
+    is_legendary: boolean;
     pokemon_v2_pokemonspeciesnames: {
       genus: string;
       name: string;
@@ -63,6 +65,8 @@ export const POKEMONS_LIST: TypedDocumentNode<
       id
       order
       pokemon_v2_pokemonspecy {
+        is_mythical
+        is_legendary
         pokemon_v2_pokemonspeciesnames(
           where: { pokemon_v2_language: { name: { _eq: "en" } } }
         ) {
