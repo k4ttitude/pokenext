@@ -6,7 +6,7 @@ import { useSearchStore } from "../../../stores/search.store";
 import ListItem from "./ListItem";
 
 export default function SearchResult() {
-  const { search, type, isLegendary, isMythical, offset, limit } =
+  const { search, type, isLegendary, isMythical, offset, limit, setTotal } =
     useSearchStore();
   const { data } = useQuery(POKEMONS_LIST, {
     variables: {
@@ -17,6 +17,8 @@ export default function SearchResult() {
       isLegendary: isLegendary.value,
       isMythical: isMythical.value,
     },
+    onCompleted: (data) =>
+      setTotal(data.pokemon_v2_pokemon_aggregate.aggregate.count),
   });
 
   return (

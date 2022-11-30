@@ -10,11 +10,7 @@ import { POKEMONS_COUNT } from "../../../graphql/queries";
 type Props = {};
 
 export default function Pagination({}: Props) {
-  const { page, pageCount, limit, total, setPage, setTotal } = useSearchStore();
-  useQuery(POKEMONS_COUNT, {
-    onCompleted: (data) =>
-      setTotal(data.pokemon_v2_pokemonspecies_aggregate.aggregate.count),
-  });
+  const { page, pageCount, limit, total, setPage } = useSearchStore();
 
   const handleGoFirst = () => setPage(1);
   const handleGoPrev = () => page > 1 && setPage(page - 1);
@@ -31,10 +27,16 @@ export default function Pagination({}: Props) {
     return pages.slice(from, from + 5);
   }, [page, pageCount]);
 
+  const first = (page - 1) * limit + 1;
+  const last =
+    page < pageCount
+      ? page * limit
+      : (page - 1) * limit + Math.min(page * limit, total % limit);
+
   return (
     <div className="mb-4 flex gap-2 items-center">
       <span className="text-sm">
-        Showing {(page - 1) * limit + 1}-{page * limit} results from {total}
+        Showing {first}-{last} results from {total}
       </span>
       <div className="border border-gray-900">
         <PaginationButton

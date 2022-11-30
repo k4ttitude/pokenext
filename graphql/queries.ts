@@ -28,6 +28,11 @@ export type PokemonsList = {
   };
   Response: {
     pokemon_v2_pokemon: Pokemon[];
+    pokemon_v2_pokemon_aggregate: {
+      aggregate: {
+        count: number;
+      };
+    };
   };
 };
 
@@ -71,21 +76,17 @@ export const POKEMONS_LIST: TypedDocumentNode<
         }
       }
     }
-  }
-`;
 
-/** Count pokemon */
-export type PokemonsCount = {
-  pokemon_v2_pokemonspecies_aggregate: {
-    aggregate: {
-      count: number;
-    };
-  };
-};
-
-export const POKEMONS_COUNT: TypedDocumentNode<PokemonsCount> = gql`
-  query CountPokemon {
-    pokemon_v2_pokemonspecies_aggregate {
+    pokemon_v2_pokemon_aggregate(
+      where: {
+        name: { _ilike: $search }
+        pokemon_v2_pokemonspecy: {
+          is_legendary: { _eq: $isLegendary }
+          is_mythical: { _eq: $isMythical }
+        }
+        pokemon_v2_pokemontypes: { pokemon_v2_type: { name: { _eq: $type } } }
+      }
+    ) {
       aggregate {
         count
       }
