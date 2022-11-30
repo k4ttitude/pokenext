@@ -69,6 +69,7 @@ export default async function Page({ params }: Props) {
                 src={`/sprites/sprites/pokemon/${pokemon.id}.png`}
                 alt="Pikachu"
                 className="w-full"
+                style={{ imageRendering: "pixelated" }}
                 width={200}
                 height={200}
               />

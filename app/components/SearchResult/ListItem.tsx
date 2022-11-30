@@ -42,6 +42,7 @@ export default function ListItem({ pokemon }: Props) {
             src={`/sprites/sprites/pokemon/${pokemon.id}.png`}
             width={100}
             height={100}
+            style={{ imageRendering: "pixelated" }}
             className="bg-white border border-gray-900 rounded min-w-[100px]"
           />
           <div
