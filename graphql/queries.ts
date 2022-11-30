@@ -8,8 +8,8 @@ export type Pokemon = {
     is_mythical: boolean;
     is_legendary: boolean;
     pokemon_v2_pokemonspeciesnames: {
-      genus: string;
       name: string;
+      genus: string;
     }[];
   };
   pokemon_v2_pokemontypes: {
@@ -93,6 +93,78 @@ export const POKEMONS_LIST: TypedDocumentNode<
     ) {
       aggregate {
         count
+      }
+    }
+  }
+`;
+
+/** Pokemon Details */
+type PokemonDetails = {
+  Variables: { id: number };
+  Response: {
+    pokemon_v2_pokemon_by_pk: {
+      id: number;
+      name: string;
+      height: number;
+      weight: number;
+      pokemon_v2_pokemontypes: {
+        pokemon_v2_type: {
+          name: string;
+        };
+      }[];
+      pokemon_v2_pokemonspecy: {
+        pokemon_v2_pokemonspeciesnames: {
+          name: string;
+          genus: string;
+          pokemon_v2_language: {
+            name: string;
+          };
+        }[];
+      };
+      pokemon_v2_pokemonabilities: {
+        pokemon_v2_ability: {
+          pokemon_v2_abilitynames: {
+            name: string;
+          }[];
+        };
+      }[];
+    };
+  };
+};
+export const POKEMON_DETAILS: TypedDocumentNode<
+  PokemonDetails["Response"],
+  PokemonDetails["Variables"]
+> = gql`
+  query PokemonDetails($id: Int!) {
+    pokemon_v2_pokemon_by_pk(id: $id) {
+      id
+      name
+      height
+      weight
+      pokemon_v2_pokemontypes {
+        pokemon_v2_type {
+          name
+        }
+      }
+      pokemon_v2_pokemonspecy {
+        pokemon_v2_pokemonspeciesnames(
+          where: { pokemon_v2_language: { name: { _in: ["en", "ja"] } } }
+        ) {
+          name
+          genus
+          pokemon_v2_language {
+            name
+          }
+        }
+      }
+      pokemon_v2_pokemonabilities {
+        pokemon_v2_ability {
+          pokemon_v2_abilitynames(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+          ) {
+            name
+          }
+        }
       }
     }
   }

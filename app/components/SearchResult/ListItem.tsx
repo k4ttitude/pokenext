@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Pokemon } from "../../../graphql/queries";
 import { useSearchStore } from "../../../stores/search.store";
 
-const formatOrder = (order: number, size: number) => {
-  const s = `000${order}`;
+export const formatId = (id: number, size: number) => {
+  const s = `000${id}`;
   return s.substring(s.length - size);
 };
 
@@ -48,7 +48,7 @@ export default function ListItem({ pokemon }: Props) {
             className={`relative bg-gray-300/80 mix-blend-multiply w-full rounded mx-6 px-3 py-2 h-min flex flex-col`}
           >
             <h3 className="uppercase font-bold">
-              #{formatOrder(pokemon.order, total.toString().length)}{" "}
+              #{formatId(pokemon.id, total.toString().length)}{" "}
               {speciesname.name}
             </h3>
             <span>{speciesname.genus}</span>
