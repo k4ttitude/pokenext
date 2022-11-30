@@ -5,9 +5,11 @@ import styles from "./Pagination.module.scss";
 import classNames from "classnames";
 import { useSearchStore } from "../../../stores/search.store";
 
-type Props = {};
+type Props = {
+  description?: boolean;
+};
 
-export default function Pagination({}: Props) {
+export default function Pagination({ description }: Props) {
   const { page, pageCount, limit, total, setPage } = useSearchStore();
 
   const handleGoFirst = () => setPage(1);
@@ -32,8 +34,13 @@ export default function Pagination({}: Props) {
       : (page - 1) * limit + Math.min(page * limit, total % limit);
 
   return (
-    <div className="flex gap-2 items-center ml-auto w-fit">
-      <span className="text-sm">
+    <div className="flex gap-2 justify-between items-center">
+      <span
+        className={classNames({
+          "text-sm invisible": true,
+          "!visible": description,
+        })}
+      >
         Showing {first}-{last} results from {total}
       </span>
       <div className="border border-gray-900">

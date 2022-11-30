@@ -38,7 +38,8 @@ export default function Home() {
         <input
           id="search"
           type="text"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded p-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+          placeholder="Search..."
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded p-2.5 focus:ring-blue-500 focus:border-blue-500 block w-full"
           value={search.value}
           onChange={(e) => search.onChange(e.target.value)}
         />
@@ -63,7 +64,7 @@ export default function Home() {
         <Checkbox id="mythical" label="is mythical" {...isMythical} />
       </div>
 
-      <Pagination />
+      <Pagination description />
       <SearchResult />
       <Pagination />
     </main>

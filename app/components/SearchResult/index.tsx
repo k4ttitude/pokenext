@@ -2,17 +2,19 @@
 
 import { useQuery } from "@apollo/client";
 import { POKEMONS_LIST } from "../../../graphql/queries";
+import useDebounce from "../../../hooks/useDebounce";
 import { useSearchStore } from "../../../stores/search.store";
 import ListItem from "./ListItem";
 
 export default function SearchResult() {
   const { search, type, isLegendary, isMythical, offset, limit, setTotal } =
     useSearchStore();
+  const debouncedSearch = useDebounce(search.value, 500);
   const { data } = useQuery(POKEMONS_LIST, {
     variables: {
       limit,
       offset,
-      search: `%${search.value}%`,
+      search: `%${debouncedSearch}%`,
       type: type.value,
       isLegendary: isLegendary.value,
       isMythical: isMythical.value,
