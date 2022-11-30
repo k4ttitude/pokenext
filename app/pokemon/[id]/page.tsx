@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import Image from "next/image";
 import { PropsWithChildren } from "react";
-import { client } from "../../../graphql/client";
+import { ssrClient } from "../../../graphql/client";
 import { POKEMON_DETAILS } from "../../../graphql/queries";
 import { formatId } from "../../components/SearchResult/ListItem";
 
 const getPokemon = async (id: number) => {
-  const res = await client.query({
+  const res = await ssrClient.query({
     query: POKEMON_DETAILS,
     variables: { id },
     fetchPolicy: "cache-first",
