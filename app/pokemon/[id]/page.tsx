@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import Image from "next/image";
+import Link from "next/link";
 import { PropsWithChildren } from "react";
 import { ssrClient } from "../../../graphql/client";
 import { POKEMON_DETAILS } from "../../../graphql/queries";
@@ -115,6 +116,25 @@ export default async function Page({ params }: Props) {
               <Content>{pokemon.weight / 10} kg</Content>
             </Section>
           </div>
+          <Link href="/">
+            <button className="w-full flex justify-center items-center gap-1 p-2 rounded-lg bg-white/50 hover:bg-white/90">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                />
+              </svg>
+              Go back
+            </button>
+          </Link>
         </div>
       </div>
     </main>
