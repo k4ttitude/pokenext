@@ -74,7 +74,7 @@ export const POKEMONS_LIST: TypedDocumentNode<
           name
         }
       }
-      pokemon_v2_pokemontypes {
+      pokemon_v2_pokemontypes(order_by: { slot: asc }) {
         pokemon_v2_type {
           name
         }
@@ -143,7 +143,7 @@ export const POKEMON_DETAILS: TypedDocumentNode<
       name
       height
       weight
-      pokemon_v2_pokemontypes {
+      pokemon_v2_pokemontypes(order_by: { slot: asc }) {
         pokemon_v2_type {
           name
         }
