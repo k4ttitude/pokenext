@@ -1,7 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app), consuming GraphQL endpoint from [PokeAPI](https://github.com/PokeAPI/pokeapi).
 
 ## Prerequisites
-Make sure you have the PokeAPI Graphql running on your [http://localhost:8080/v1/graphql](http://localhost:8080/v1/graphql)
+
+### GraphQL server
+Make sure you have the PokeAPI GraphQL running on your [http://localhost:8080/v1/graphql](http://localhost:8080/v1/graphql)
+
+Otherwise, you can change GraphQL URI in [docker-compose.yaml](./docker-compose.yaml)
+```yaml
+    # in build args
+    build:
+      context: .
+      args:
+        - NEXT_PUBLIC_GRAPHQL_URI=${YOUR_GRAPHQL_URI}
+    # and in environemnt
+    environment:
+      - GRAPHQL_URI=${YOUR_GRAPHQL_URI}
+```
 
 ## Run the Application
 

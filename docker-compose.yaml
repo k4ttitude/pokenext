@@ -6,7 +6,6 @@ services:
       context: .
       args:
         - NEXT_PUBLIC_GRAPHQL_URI=http://localhost:8080/v1/graphql
-        # - GRAPHQL_URI=http://host.docker.internal:8080/v1/graphql
     restart: always
     environment:
       - GRAPHQL_URI=http://host.docker.internal:8080/v1/graphql
