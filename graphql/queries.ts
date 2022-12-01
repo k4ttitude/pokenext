@@ -1,4 +1,5 @@
-import { gql, TypedDocumentNode } from "@apollo/client";
+import { TypedDocumentNode } from "@apollo/client";
+import { gql } from "./__generated__";
 
 /** List pokemon */
 export type Pokemon = {
@@ -38,30 +39,13 @@ export type PokemonsList = {
   };
 };
 
-export const POKEMONS_LIST: TypedDocumentNode<
-  PokemonsList["Response"],
-  PokemonsList["Variables"]
-> = gql`
+export const POKEMONS_LIST = gql(`
   query ListPokemon(
     $limit: Int
     $offset: Int
-    $search: String!
-    $type: String!
-    $isLegendary: Boolean!
-    $isMythical: Boolean!
+    $where: pokemon_v2_pokemon_bool_exp
   ) {
-    pokemon_v2_pokemon(
-      limit: $limit
-      offset: $offset
-      where: {
-        name: { _ilike: $search }
-        pokemon_v2_pokemonspecy: {
-          is_legendary: { _eq: $isLegendary }
-          is_mythical: { _eq: $isMythical }
-        }
-        pokemon_v2_pokemontypes: { pokemon_v2_type: { name: { _eq: $type } } }
-      }
-    ) {
+    pokemon_v2_pokemon(limit: $limit, offset: $offset, where: $where) {
       id
       order
       pokemon_v2_pokemonspecy {
@@ -81,22 +65,13 @@ export const POKEMONS_LIST: TypedDocumentNode<
       }
     }
 
-    pokemon_v2_pokemon_aggregate(
-      where: {
-        name: { _ilike: $search }
-        pokemon_v2_pokemonspecy: {
-          is_legendary: { _eq: $isLegendary }
-          is_mythical: { _eq: $isMythical }
-        }
-        pokemon_v2_pokemontypes: { pokemon_v2_type: { name: { _eq: $type } } }
-      }
-    ) {
+    pokemon_v2_pokemon_aggregate(where: $where) {
       aggregate {
         count
       }
     }
   }
-`;
+`);
 
 /** Pokemon Details */
 type PokemonDetails = {
@@ -133,10 +108,7 @@ type PokemonDetails = {
     };
   };
 };
-export const POKEMON_DETAILS: TypedDocumentNode<
-  PokemonDetails["Response"],
-  PokemonDetails["Variables"]
-> = gql`
+export const POKEMON_DETAILS = gql(`
   query PokemonDetails($id: Int!) {
     pokemon_v2_pokemon_by_pk(id: $id) {
       id
@@ -172,17 +144,14 @@ export const POKEMON_DETAILS: TypedDocumentNode<
       }
     }
   }
-`;
+`);
 
 /** Autocomplete */
 type PokemonAutocomplete = {
   Variables: { search: `%${string}%` };
   Response: { pokemon_v2_pokemonspecies: { name: string }[] };
 };
-export const POKEMON_AUTOCOMPLETE: TypedDocumentNode<
-  PokemonAutocomplete["Response"],
-  PokemonAutocomplete["Variables"]
-> = gql`
+export const POKEMON_AUTOCOMPLETE = gql(`
   query PokemonNames($search: String) {
     pokemon_v2_pokemonspecies(
       limit: 10
@@ -192,4 +161,4 @@ export const POKEMON_AUTOCOMPLETE: TypedDocumentNode<
       name
     }
   }
-`;
+`);

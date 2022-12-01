@@ -14,13 +14,19 @@ export default function SearchResult() {
     variables: {
       limit,
       offset,
-      search: `%${debouncedSearch}%`,
-      type: type.value,
-      isLegendary: isLegendary.value,
-      isMythical: isMythical.value,
+      where: {
+        name: { _ilike: `%${debouncedSearch}%` },
+        pokemon_v2_pokemonspecy: {
+          is_legendary: isLegendary.value ? { _eq: isLegendary.value } : {},
+          is_mythical: isMythical.value ? { _eq: isMythical.value } : {},
+        },
+        pokemon_v2_pokemontypes: {
+          pokemon_v2_type: type.value ? { name: { _eq: type.value } } : {},
+        },
+      },
     },
     onCompleted: (data) =>
-      setTotal(data.pokemon_v2_pokemon_aggregate.aggregate.count),
+      setTotal(data.pokemon_v2_pokemon_aggregate.aggregate?.count || 0),
   });
 
   return (

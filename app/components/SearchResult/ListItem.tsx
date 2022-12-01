@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { Pokemon } from "../../../graphql/queries";
+import { ArrayElement } from "../../../graphql/types";
+import { ListPokemonQuery } from "../../../graphql/__generated__/graphql";
 import { useSearchStore } from "../../../stores/search.store";
 
 export const formatId = (id: number, size: number) => {
@@ -9,21 +10,21 @@ export const formatId = (id: number, size: number) => {
   return s.substring(s.length - size);
 };
 
-type Props = { pokemon: Pokemon };
+type Props = { pokemon: ArrayElement<ListPokemonQuery["pokemon_v2_pokemon"]> };
 export default function ListItem({ pokemon }: Props) {
   const { total } = useSearchStore();
   const speciesname =
-    pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames[0];
-  const type = pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type.name;
-  const isLegendary = pokemon.pokemon_v2_pokemonspecy.is_legendary;
-  const isMythical = pokemon.pokemon_v2_pokemonspecy.is_mythical;
+    pokemon.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonspeciesnames[0];
+  const type = pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type?.name;
+  const isLegendary = pokemon.pokemon_v2_pokemonspecy?.is_legendary;
+  const isMythical = pokemon.pokemon_v2_pokemonspecy?.is_mythical;
 
   return (
     <Link href={`/pokemon/${pokemon.id}`}>
       <div className="relative group">
         <div
           className={classNames({
-            "absolute -inset-[1px] bg-gradient-to-r rounded-lg blur opacity-40 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt":
+            "absolute -inset-[1px] bg-gradient-to-r rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt":
               isLegendary || isMythical,
             "from-yellow-600 to-red-600": isLegendary,
             "from-teal-600 to-blue-600": isMythical,
@@ -50,9 +51,9 @@ export default function ListItem({ pokemon }: Props) {
           >
             <h3 className="uppercase font-bold">
               #{formatId(pokemon.id, total.toString().length)}{" "}
-              {speciesname.name}
+              {speciesname?.name}
             </h3>
-            <span>{speciesname.genus}</span>
+            <span>{speciesname?.genus}</span>
           </div>
         </div>
       </div>

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gql:compile": "graphql-codegen",
+    "gql:watch": "graphql-codegen -w"
   },
   "dependencies": {
     "@apollo/client": "^3.7.1",
@@ -26,7 +28,11 @@
     "zustand": "^4.1.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.15.0",
+    "@graphql-codegen/client-preset": "^1.2.0",
+    "@graphql-typed-document-node/core": "^3.1.1",
     "autoprefixer": "^10.4.13",
+    "dotenv": "^16.0.3",
     "postcss": "^8.4.19",
     "tailwindcss": "^3.2.4"
   }

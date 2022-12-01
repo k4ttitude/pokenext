@@ -65,6 +65,9 @@ export default function Home() {
           value={type.value}
           onChange={(e) => type.onChange(e.target.value)}
         >
+          <option key={`autocomplete_all`} value="">
+            All
+          </option>
           {TYPES.map((type) => (
             <option key={type} value={type}>
               {type}

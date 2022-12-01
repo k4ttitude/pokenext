@@ -36,7 +36,7 @@ export const useSearchStore = create<Pagination>((set, get) => ({
       set({ offset: 0, page: 1, search: { ...get().search, value } }),
   },
   type: {
-    value: "normal",
+    value: "",
     onChange: (value) =>
       set({ offset: 0, page: 1, type: { ...get().type, value } }),
   },
