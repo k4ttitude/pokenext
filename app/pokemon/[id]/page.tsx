@@ -67,7 +67,7 @@ export default async function Page({ params }: Props) {
             <Content>
               <Image
                 src={`/sprites/sprites/pokemon/${pokemon.id}.png`}
-                alt="Pikachu"
+                alt={englishName?.name || "avatar"}
                 className="w-full"
                 style={{ imageRendering: "pixelated" }}
                 width={200}
