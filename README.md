@@ -3,9 +3,27 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Prerequisites
 
 ### GraphQL server
-Make sure you have the PokeAPI GraphQL running on your [http://localhost:8080/v1/graphql](http://localhost:8080/v1/graphql)
+Make sure you have the [PokeAPI](https://github.com/PokeAPI/pokeapi) **graphql** running on your localhost.
+```sh
+# clone the repository
+git clone --recurse-submodules git@github.com:PokeAPI/pokeapi.git
+cd pokeapi
 
-Otherwise, you can change GraphQL URI in [docker-compose.yaml](./docker-compose.yaml)
+make docker-setup # require python3 and pip3
+
+sudo npm install --global hasura-cli
+
+make hasura-apply
+```
+At this point you should have Hasura Console at [http://localhost:8080/console](http://localhost:8080/console), and graphql endpoint at [http://localhost:8080/v1/graphql](http://localhost:8080/v1/graphql)
+
+### Configure GraphQL URL
+By default, you have:
+```
+NEXT_PUBLIC_GRAPHQL_URI=http://localhost:8080/v1/graphql
+GRAPHQL_URI=http://localhost:8080/v1/graphql
+```
+If your URI is different, you can change it in [docker-compose.yaml](./docker-compose.yaml)
 ```yaml
     # in build args
     build:
