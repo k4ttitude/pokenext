@@ -24,3 +24,4 @@ Simply run with docker:
 ```sh
 docker-compose up -d
 ```
+The build step will take a while, since it needs to pull pokemon images from [https://github.com/PokeAPI/sprites](https://github.com/PokeAPI/sprites)
