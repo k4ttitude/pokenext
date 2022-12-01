@@ -1,5 +1,8 @@
 "use client";
 
+import { useQuery } from "@apollo/client";
+import { POKEMON_AUTOCOMPLETE } from "../graphql/queries";
+import useDebounce from "../hooks/useDebounce";
 import { useSearchStore } from "../stores/search.store";
 import FormControl from "./components/FormControl";
 import Pagination from "./components/Pagination";
@@ -28,6 +31,10 @@ const TYPES = [
 
 export default function Home() {
   const { search, type, isLegendary, isMythical } = useSearchStore();
+  const debouncedSearch = useDebounce(search.value);
+  const { data } = useQuery(POKEMON_AUTOCOMPLETE, {
+    variables: { search: `%${debouncedSearch}%` },
+  });
 
   return (
     <main className="mx-auto h-screen flex flex-col max-w-[970px] w-full px-3 py-2">
@@ -42,7 +49,13 @@ export default function Home() {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded p-2.5 focus:ring-blue-500 focus:border-blue-500 block w-full"
           value={search.value}
           onChange={(e) => search.onChange(e.target.value)}
+          list="names-list"
         />
+        <datalist id="names-list">
+          {data?.pokemon_v2_pokemonspecies.map((item) => (
+            <option key={`autocomplete_${item.name}`}>{item.name}</option>
+          ))}
+        </datalist>
       </FormControl>
 
       <FormControl label="Type" controlId="type">

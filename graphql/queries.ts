@@ -173,3 +173,23 @@ export const POKEMON_DETAILS: TypedDocumentNode<
     }
   }
 `;
+
+/** Autocomplete */
+type PokemonAutocomplete = {
+  Variables: { search: `%${string}%` };
+  Response: { pokemon_v2_pokemonspecies: { name: string }[] };
+};
+export const POKEMON_AUTOCOMPLETE: TypedDocumentNode<
+  PokemonAutocomplete["Response"],
+  PokemonAutocomplete["Variables"]
+> = gql`
+  query PokemonNames($search: String) {
+    pokemon_v2_pokemonspecies(
+      limit: 10
+      order_by: { name: asc }
+      where: { name: { _ilike: $search } }
+    ) {
+      name
+    }
+  }
+`;
