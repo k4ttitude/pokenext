@@ -21,7 +21,7 @@ ENV GRAPHQL_URI=$GRAPHQL_URI
 WORKDIR /opt/app
 COPY . .
 COPY --from=deps /opt/app/node_modules ./node_modules
-# RUN cd public && git clone https://github.com/PokeAPI/sprites.git
+RUN pnpm gql:compile
 RUN pnpm build
 CMD ["pnpm", "start"]
 
