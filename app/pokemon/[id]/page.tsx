@@ -4,7 +4,6 @@ import Link from "next/link";
 import { PropsWithChildren } from "react";
 import { ssrClient } from "../../../graphql/client";
 import { POKEMON_DETAILS } from "../../../graphql/queries";
-import imageLoader from "../../../loaders/image.loader";
 import { formatId } from "../../components/SearchResult/ListItem";
 
 const getPokemon = async (id: number) => {
@@ -71,9 +70,10 @@ export default async function Page({ params }: Props) {
             <Content>
               <Image
                 alt={englishName?.name || "avatar"}
-                src={`/${pokemon!.id}.png`}
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+                  pokemon!.id
+                }.png`}
                 className="w-full"
-                style={{ imageRendering: "pixelated" }}
                 width={200}
                 height={200}
               />

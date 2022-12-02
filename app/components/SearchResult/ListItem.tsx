@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrayElement } from "../../../graphql/types";
 import { ListPokemonQuery } from "../../../graphql/__generated__/graphql";
-import imageLoader from "../../../loaders/image.loader";
 import { useSearchStore } from "../../../stores/search.store";
 
 export const formatId = (id: number, size: number) => {
@@ -41,11 +40,9 @@ export default function ListItem({ pokemon }: Props) {
         >
           <Image
             alt="avatar"
-            src={`/${pokemon.id}.png`}
-            // loader={imageLoader}
-            width={100}
-            height={100}
-            style={{ imageRendering: "pixelated" }}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+            width={75}
+            height={75}
             className="bg-white border border-gray-900 rounded min-w-[100px]"
           />
           <div
