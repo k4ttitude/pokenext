@@ -64,7 +64,7 @@ export default async function Page({ params }: Props) {
                 </div>
               </Content>
               <Content className="aspect-square flex items-center justify-center font-bold text-lg">
-                #{formatId(pokemon.id || 0, 3)}
+                #{formatId(pokemon.id)}
               </Content>
             </div>
             <Content>

@@ -50,8 +50,7 @@ export default function ListItem({ pokemon }: Props) {
             className={`relative bg-gray-300/80 mix-blend-multiply w-full rounded mx-6 px-3 py-2 h-min flex flex-col`}
           >
             <h3 className="uppercase font-bold">
-              #{formatId(pokemon.id, total.toString().length)}{" "}
-              {speciesname?.name}
+              #{formatId(pokemon.id)} {speciesname?.name}
             </h3>
             <span>{speciesname?.genus}</span>
           </div>
