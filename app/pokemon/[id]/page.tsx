@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PropsWithChildren } from "react";
 import { ssrClient } from "../../../graphql/client";
 import { POKEMON_DETAILS } from "../../../graphql/queries";
+import imageLoader from "../../../loaders/image.loader";
 import { formatId } from "../../components/SearchResult/ListItem";
 
 const getPokemon = async (id: number) => {
@@ -19,13 +20,15 @@ type Props = { params: { id: number } };
 
 export default async function Page({ params }: Props) {
   const pokemon = await getPokemon(params.id);
+  if (!pokemon) return <div>Not found</div>;
+
   const englishName =
-    pokemon?.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonspeciesnames.find(
+    pokemon.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonspeciesnames.find(
       (item) => item.pokemon_v2_language?.name === "en"
     );
-  const type = pokemon?.pokemon_v2_pokemontypes[0].pokemon_v2_type?.name;
-  const isLegendary = pokemon?.pokemon_v2_pokemonspecy?.is_legendary;
-  const isMythical = pokemon?.pokemon_v2_pokemonspecy?.is_mythical;
+  const type = pokemon.pokemon_v2_pokemontypes[0].pokemon_v2_type?.name;
+  const isLegendary = pokemon.pokemon_v2_pokemonspecy?.is_legendary;
+  const isMythical = pokemon.pokemon_v2_pokemonspecy?.is_mythical;
 
   return (
     <main
@@ -51,7 +54,7 @@ export default async function Page({ params }: Props) {
                   <span className="font-bold text-lg">{englishName?.name}</span>
                   <span className="font-bold">
                     {
-                      pokemon?.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonspeciesnames.find(
+                      pokemon.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonspeciesnames.find(
                         (item) => item.pokemon_v2_language?.name === "ja"
                       )?.name
                     }
@@ -62,13 +65,13 @@ export default async function Page({ params }: Props) {
                 </div>
               </Content>
               <Content className="aspect-square flex items-center justify-center font-bold text-lg">
-                #{formatId(pokemon?.id || 0, 3)}
+                #{formatId(pokemon.id || 0, 3)}
               </Content>
             </div>
             <Content>
               <Image
-                src={`/sprites/sprites/pokemon/${pokemon?.id}.png`}
                 alt={englishName?.name || "avatar"}
+                src={`/${pokemon!.id}.png`}
                 className="w-full"
                 style={{ imageRendering: "pixelated" }}
                 width={200}
@@ -79,7 +82,7 @@ export default async function Page({ params }: Props) {
           <Section>
             <Title>Types</Title>
             <Content className="flex gap-1 flex-wrap justify-center">
-              {pokemon?.pokemon_v2_pokemontypes
+              {pokemon.pokemon_v2_pokemontypes
                 .map((item) => item.pokemon_v2_type?.name)
                 .map((type, idx) => (
                   <span
@@ -94,7 +97,7 @@ export default async function Page({ params }: Props) {
           <Section>
             <Title>Abilities</Title>
             <Content className="grid grid-cols-2">
-              {pokemon?.pokemon_v2_pokemonabilities
+              {pokemon.pokemon_v2_pokemonabilities
                 .map(
                   (item) =>
                     item.pokemon_v2_ability?.pokemon_v2_abilitynames[0].name
@@ -109,11 +112,11 @@ export default async function Page({ params }: Props) {
           <div className="grid grid-cols-2 gap-1">
             <Section>
               <Title>Height</Title>
-              <Content>{(pokemon?.height || 0) / 10} m</Content>
+              <Content>{(pokemon.height || 0) / 10} m</Content>
             </Section>
             <Section>
               <Title>Weight</Title>
-              <Content>{(pokemon?.weight || 0) / 10} kg</Content>
+              <Content>{(pokemon.weight || 0) / 10} kg</Content>
             </Section>
           </div>
           <Link href="/">
