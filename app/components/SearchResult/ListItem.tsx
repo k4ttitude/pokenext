@@ -5,8 +5,9 @@ import { ArrayElement } from "../../../graphql/types";
 import { ListPokemonQuery } from "../../../graphql/__generated__/graphql";
 import { useSearchStore } from "../../../stores/search.store";
 
-export const formatId = (id: number, size: number) => {
-  const s = `000${id}`;
+export const formatId = (id: number) => {
+  const size = Math.max(id.toString().length, 3);
+  const s = `000000${id}`;
   return s.substring(s.length - size);
 };
 
